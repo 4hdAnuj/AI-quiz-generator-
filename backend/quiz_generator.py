@@ -11,7 +11,12 @@ def get_gemini_client():
         return None
     try:
         genai.configure(api_key=api_key)
-        return genai.GenerativeModel('gemini-1.5-flash')
+        # Use gemini-1.5-flash for faster responses
+        model = genai.GenerativeModel(
+            'gemini-1.5-flash',
+            system_instruction="You are a quick quiz generator. Always respond with valid JSON format."
+        )
+        return model
     except Exception as e:
         print(f"Error initializing Gemini client: {e}")
         return None
@@ -22,26 +27,23 @@ def generate_quiz(prompt, num_questions=5):
         return [{"question": "Gemini API key not configured. Please add GEMINI_API_KEY in the Secrets tool.", "options": ["A) Go to Tools > Secrets", "B) Add GEMINI_API_KEY", "C) Set your API key value", "D) Restart the application"]}]
     
     try:
-        # Create a detailed prompt for Gemini
-        system_prompt = f"""Generate {num_questions} multiple-choice questions about: {prompt}
+        # Create a concise prompt for faster response
+        system_prompt = f"""Create {num_questions} multiple-choice questions about {prompt}. Return only valid JSON:
 
-Instructions:
-- Return the response as a valid JSON array
-- Each question should be an object with 'question' and 'options' fields
-- Each question should have exactly 4 multiple choice options labeled A), B), C), D)
-- Make the questions educational and engaging
-- Vary the difficulty level
+[{{"question": "Question text?", "options": ["A) option1", "B) option2", "C) option3", "D) option4"]}}]
 
-Example format:
-[
-  {{
-    "question": "What is the capital of France?",
-    "options": ["A) London", "B) Berlin", "C) Paris", "D) Madrid"]
-  }}
-]
-"""
+Topic: {prompt}
+Questions: {num_questions}"""
         
-        response = model.generate_content(system_prompt)
+        # Configure generation parameters for faster response
+        generation_config = {
+            "temperature": 0.7,
+            "top_p": 0.8,
+            "top_k": 40,
+            "max_output_tokens": 2048,
+        }
+        
+        response = model.generate_content(system_prompt, generation_config=generation_config)
         quiz_text = response.text
         
         # Try to parse JSON response
