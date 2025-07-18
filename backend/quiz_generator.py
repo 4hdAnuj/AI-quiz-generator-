@@ -6,10 +6,15 @@ import json
 # Initialize OpenAI client
 api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
-    raise ValueError("OPENAI_API_KEY environment variable is not set. Please add it in the Secrets tool.")
-client = OpenAI(api_key=api_key)
+    print("WARNING: OPENAI_API_KEY environment variable is not set. Please add it in the Secrets tool.")
+    client = None
+else:
+    client = OpenAI(api_key=api_key)
 
 def generate_quiz(prompt, num_questions=5):
+    if not client:
+        return [{"question": "OpenAI API key not configured. Please add OPENAI_API_KEY in the Secrets tool.", "options": ["A) Go to Tools > Secrets", "B) Add OPENAI_API_KEY", "C) Set your API key value", "D) Restart the application"]}]
+    
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
