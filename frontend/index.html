@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Quiz Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    textarea, input {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    .quiz {
+      margin-top: 30px;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 AI Quiz Generator</h1>
+  <label for="prompt">Enter a Topic:</label>
+  <textarea id="prompt" rows="4" placeholder="e.g., Artificial Intelligence, Climate Change, etc."></textarea>
+
+  <label for="num">Number of Questions:</label>
+  <input type="number" id="num" value="5" min="1" max="20">
+
+  <button onclick="generateQuiz()">Generate Quiz</button>
+
+  <div class="quiz" id="quizBox"></div>
+
+  <script>
+    async function generateQuiz() {
+      const prompt = document.getElementById("prompt").value;
+      const num = document.getElementById("num").value;
+      const quizBox = document.getElementById("quizBox");
+      quizBox.innerHTML = "⏳ Generating quiz...";
+
+      const response = await fetch('/generate_quiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt, num_questions: num })
+      });
+
+      const data = await response.json();
+      const quiz = data.quiz;
+
+      quizBox.innerHTML = "<h2>📝 Generated Quiz</h2>";
+      quiz.forEach((q, index) => {
+        quizBox.innerHTML += `<p><strong>Q${index + 1}:</strong> ${q.question}</p>`;
+        if (q.options) {
+          q.options.forEach(opt => {
+            quizBox.innerHTML += `<li>${opt}</li>`;
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
