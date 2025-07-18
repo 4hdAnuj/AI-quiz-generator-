@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
+import sys
+sys.path.append('backend')
+from quiz_generator import generate_quiz
 
 app = Flask(__name__, static_folder='frontend', static_url_path='')
 CORS(app)  # Allows requests from frontend
@@ -17,14 +20,8 @@ def generate():
     prompt = data.get("prompt", "General Knowledge")
     num_questions = int(data.get("num_questions", 5))
 
-    # Dummy quiz generation logic (replace with real one if needed)
-    quiz = []
-    for i in range(num_questions):
-        quiz.append({
-            "question": f"{i+1}. What is something about {prompt}?",
-            "options": ["Option A", "Option B", "Option C", "Option D"]
-        })
-
+    # Generate real quiz using OpenAI
+    quiz = generate_quiz(prompt, num_questions)
     return jsonify({"quiz": quiz})
 
 if __name__ == '__main__':
