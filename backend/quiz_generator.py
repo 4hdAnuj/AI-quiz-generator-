@@ -4,7 +4,10 @@ import os
 import json
 
 # Initialize OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("OPENAI_API_KEY environment variable is not set. Please add it in the Secrets tool.")
+client = OpenAI(api_key=api_key)
 
 def generate_quiz(prompt, num_questions=5):
     try:
