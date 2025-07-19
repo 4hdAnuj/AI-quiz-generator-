@@ -1,0 +1,66 @@
+🤖 AI QUIZ GENERATOR - QUICK START GUIDE
+========================================
+
+✅ CURRENT STATUS: FULLY WORKING WITH ALL FEATURES!
+
+🎯 FEATURES INCLUDED:
+- AI-Powered Quiz Generation (Google Gemini)
+- User Registration & Login System
+- Live Leaderboard with Medal System
+- Personal Result Tracking
+- Modern Web Interface
+- SQLite Database Storage
+
+🚀 HOW TO RUN (3 OPTIONS):
+
+OPTION 1 - ONE-CLICK SETUP (RECOMMENDED):
+1. Double-click "setup.bat"
+2. Wait for installation to complete
+3. Open browser to http://localhost:3000
+
+OPTION 2 - QUICK RUN (if already installed):
+1. Double-click "run.bat"
+2. Open browser to http://localhost:3000
+
+OPTION 3 - MANUAL:
+1. Open PowerShell/Command Prompt
+2. Run: py main.py
+3. Open browser to http://localhost:3000
+
+📁 IMPORTANT FILES:
+- main.py (Main application)
+- backend/auth.py (Authentication system)
+- backend/quiz_generator.py (AI quiz generation)
+- frontend/index.html (Web interface)
+- setup.bat (Complete setup script)
+- run.bat (Quick run script)
+- start.ps1 (PowerShell script)
+
+🔑 API KEY:
+- Already configured: AIzaSyCnn4Art8B1Uog0zRcOethbzkkJo4tyzAg
+- Stored in .env file and environment variables
+
+💾 DATABASE:
+- SQLite database: backend/database.db
+- Automatically created on first run
+- Stores users and quiz results
+
+🎮 HOW TO USE:
+1. Register/Login with any username/password
+2. Go to "Take Quiz" tab
+3. Enter any topic (Science, History, etc.)
+4. Choose number of questions (1-20)
+5. Generate and take the quiz
+6. View results and leaderboard
+
+🛠️ TROUBLESHOOTING:
+- If "Module not found": Run setup.bat
+- If "Port in use": Kill python processes and restart
+- If database issues: Delete backend/database.db and restart
+
+📞 SUPPORT:
+- Check README.md for detailed documentation
+- All features are tested and working
+- Application logs show successful operations
+
+🎉 ENJOY YOUR AI QUIZ GENERATOR! 
