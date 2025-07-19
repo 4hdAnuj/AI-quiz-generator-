@@ -22,7 +22,7 @@ A modern web application that generates AI-powered quizzes using Google's Gemini
 2. Run: `py -m pip install -r backend/requirements.txt`
 3. Set environment variable: `set GEMINI_API_KEY
 4. Run: `py main.py`
-5. Open browser to `http://localhost:3000`
+5. Open browser to `https://ai-quiz-generator-1-t84g.onrender.com/`
 
 ### Option 3: Quick Run (if dependencies already installed)
 1. Double-click `run.bat` to start the application
