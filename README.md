@@ -20,7 +20,7 @@ A modern web application that generates AI-powered quizzes using Google's Gemini
 ### Option 2: Manual Setup
 1. Install Python 3.8+ if not already installed
 2. Run: `py -m pip install -r backend/requirements.txt`
-3. Set environment variable: `set GEMINI_API_KEY=AIzaSyCnn4Art8B1Uog0zRcOethbzkkJo4tyzAg`
+3. Set environment variable: `set GEMINI_API_KEY
 4. Run: `py main.py`
 5. Open browser to `http://localhost:3000`
 
