@@ -24,13 +24,15 @@ def get_gemini_client():
 def generate_quiz(prompt, num_questions=5):
     model = get_gemini_client()
     if not model:
-        return [{"question": "Gemini API key not configured. Please add GEMINI_API_KEY in the Secrets tool.", "options": ["A) Go to Tools > Secrets", "B) Add GEMINI_API_KEY", "C) Set your API key value", "D) Restart the application"]}]
+        return [{"question": "Gemini API key not configured. Please add GEMINI_API_KEY in the Secrets tool.", "options": ["A) Go to Tools > Secrets", "B) Add GEMINI_API_KEY", "C) Set your API key value", "D) Restart the application"], "correct_answer": 1}]
     
     try:
         # Create a concise prompt for faster response
-        system_prompt = f"""Create {num_questions} multiple-choice questions about {prompt}. Return only valid JSON:
+        system_prompt = f"""Create {num_questions} multiple-choice questions about {prompt}. Return only valid JSON with correct answers:
 
-[{{"question": "Question text?", "options": ["A) option1", "B) option2", "C) option3", "D) option4"]}}]
+[{{"question": "Question text?", "options": ["A) option1", "B) option2", "C) option3", "D) option4"], "correct_answer": 0}}]
+
+Where correct_answer is the index (0-3) of the correct option. Return only valid JSON.
 
 Topic: {prompt}
 Questions: {num_questions}"""
@@ -78,9 +80,9 @@ Questions: {num_questions}"""
             if current_question:
                 questions.append({"question": current_question, "options": current_options})
             
-            return questions if questions else [{"question": "Generated quiz parsing failed", "options": ["A) Try again", "B) Check API key", "C) Simplify topic", "D) Contact support"]}]
+            return questions if questions else [{"question": "Generated quiz parsing failed", "options": ["A) Try again", "B) Check API key", "C) Simplify topic", "D) Contact support"], "correct_answer": 0}]
             
     except Exception as e:
         print(f"Error generating quiz: {e}")
         # Return fallback quiz
-        return [{"question": f"Error generating quiz: {str(e)}", "options": ["A) Please check your API key", "B) Try again", "C) Check console for details", "D) Contact support"]}]
+        return [{"question": f"Error generating quiz: {str(e)}", "options": ["A) Please check your API key", "B) Try again", "C) Check console for details", "D) Contact support"], "correct_answer": 0}]

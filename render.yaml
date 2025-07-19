@@ -2,7 +2,7 @@ services:
   - type: web
     name: ai-quiz-generator
     env: python
-    buildCommand: pip install -r backend/requirements.txt
+    buildCommand: pip install -r requirements.txt
     startCommand: python main.py
     envVars:
       - key: GEMINI_API_KEY
